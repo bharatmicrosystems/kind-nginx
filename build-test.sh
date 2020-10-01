@@ -29,7 +29,7 @@ kubectl apply -f nginx-service.yaml
 
 NODE_IP=$(kubectl get node -o wide|tail -1|awk {'print $6'})
 NODE_PORT=$(kubectl get svc nginx-service -o go-template='{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{"\n"}}{{end}}{{end}}')
-sleep 10
+sleep 60
 SUCCESS=$(curl $NODE_IP:$NODE_PORT)
 if [[ "${SUCCESS}" != "Hello World" ]]; 
 then
