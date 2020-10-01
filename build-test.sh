@@ -1,5 +1,5 @@
 #! /bin/bash
-
+docker_username=$1
 set -xe
 
 curl -sL https://kind.sigs.k8s.io/dl/v0.9.0/kind-linux-amd64 -o /usr/local/bin/kind
@@ -21,8 +21,8 @@ kind create cluster --wait 10m --config kind-config.yaml
 
 kubectl get nodes
 
-docker build -t bharamicrosystems/nginx:dev .
-kind load docker-image bharamicrosystems/nginx:dev
+docker build -t $docker_username/nginx:dev .
+kind load docker-image $docker_username/nginx:dev
 
 kubectl apply -f nginx-deployment.yaml
 kubectl apply -f nginx-service.yaml

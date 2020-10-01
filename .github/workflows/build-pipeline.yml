@@ -15,11 +15,11 @@ jobs:
       with:
         fetch-depth: 0
     - name: Build the Docker image
-      run: docker build -t bharamicrosystems/nginx:dev .
+      run: docker build -t $docker_username/nginx:dev .
     - name: Login to Docker
       run: echo "$docker_password" | docker login -u "$docker_username" --password-stdin
     - name: Push the docker image
-      run: docker push bharamicrosystems/nginx:dev
+      run: docker push $docker_username/nginx:dev
 
   kubernetes-component-test:
     runs-on: ubuntu-latest
@@ -29,7 +29,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: Run KIND Test
-      run: sudo sh build-test.sh
+      run: sudo sh build-test.sh $docker_username
   
   promote-and-push-docker-image:
     runs-on: ubuntu-latest
@@ -39,10 +39,10 @@ jobs:
       with:
         fetch-depth: 0
     - name: Pull the Docker image
-      run: docker pull bharamicrosystems/nginx:dev
+      run: docker pull $docker_username/nginx:dev
     - name: Tag the Docker image
-      run: docker tag bharamicrosystems/nginx:dev bharamicrosystems/nginx:release
+      run: docker tag $docker_username/nginx:dev $docker_username/nginx:release
     - name: Login to Docker
       run: echo "$docker_password" | docker login -u "$docker_username" --password-stdin
     - name: Push the docker image
-      run: docker push bharamicrosystems/nginx:release
+      run: docker push $docker_username/nginx:release
