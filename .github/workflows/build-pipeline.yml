@@ -29,7 +29,7 @@ jobs:
       with:
         fetch-depth: 0
     - name: Run KIND Test
-      run: . build-test.sh
+      run: sudo sh build-test.sh
   
   promote-and-push-docker-image:
     runs-on: ubuntu-latest
