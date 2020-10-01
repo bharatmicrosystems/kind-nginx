@@ -25,7 +25,7 @@ docker build -t bharamicrosystems/nginx:dev .
 kind load docker-image bharamicrosystems/nginx:dev
 
 kubectl apply -f nginx-deployment.yaml
-kubectl apply -f nginx-svc.yaml
+kubectl apply -f nginx-service.yaml
 
 NODE_IP=$(kubectl get node -o wide|tail -1|awk {'print $6'})
 NODE_PORT=$(kubectl get svc nginx-service -o go-template='{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{"\n"}}{{end}}{{end}}')
